@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     List<Vector3> positionPrefabs = new List<Vector3>();
    
 
-    public bool end = false;
+    private bool end = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     {
         
         transform.position = Vector3.MoveTowards(transform.position, obj, step);
+        float distance = Vector3.Distance(transform.position, obj);
+        if(distance <0.7)
+        {
+            end = true;
+        }
+      
         if (end==true)
         {
             Debug.Log("MovePlayerToObject end" + obj);
@@ -80,9 +86,12 @@ public class PlayerController : MonoBehaviour
        
         if (other.gameObject.CompareTag("Pick Up"))
         {
-            other.gameObject.SetActive(false);
+            Debug.Log("Destroy"+ other.gameObject.transform.position);
+            //other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
             count++;
-            end = true;
+            Vector3 objp = other.transform.position;
+            positionPrefabs.Remove(objp);
             ShowSetCounttext();
         }
     }
