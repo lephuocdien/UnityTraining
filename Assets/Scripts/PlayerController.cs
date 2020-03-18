@@ -13,7 +13,12 @@ public class PlayerController : MonoBehaviour
     public Camera nonVRCamera;
     public GameObject prefab;
     // ArrayList positionPrefabs = new ArrayList();
+    //List<Vector3> positionPrefabs = new List<Vector3>();
+
     List<Vector3> positionPrefabs = new List<Vector3>();
+   
+
+    public bool end = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -21,23 +26,32 @@ public class PlayerController : MonoBehaviour
         ShowSetCounttext();
         wintext.text = "";
     }
-    public void MovePlayerToObject(Vector3 obj, float step)
+    public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
+        
         transform.position = Vector3.MoveTowards(transform.position, obj, step);
+        if (end==true)
+        {
+            Debug.Log("MovePlayerToObject end" + obj);
+            //remove this item
+            positionPrefabs.RemoveAt(index);
+            end = false;
+        }
     }
     void GenertateObject()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Press mouse button");
+           
             RaycastHit hit;
             Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("hit ttttttttt" + hit.transform.name);
+             
                 if (hit.transform.name == "Ground")
                 {
                     Instantiate(prefab, hit.point, Quaternion.identity);
+                    Debug.Log("Add positon " + hit.point);
                     positionPrefabs.Add(hit.point);
                 }
             }
@@ -47,27 +61,28 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float step = speed * Time.deltaTime;
-        // float movehorizontal = Input.GetAxis("Horizontal");
-        //  float movevertical = Input.GetAxis("Vertical");
-        // Vector3 movement = new Vector3(movehorizontal,0.0f,movevertical);
-        // rb.AddForce(movement * speed);
+       
         GenertateObject();
-        ///move player
-        Vector3 movement = new Vector3(positionPrefabs[0].x, positionPrefabs[0].y, positionPrefabs[0].z);
+       
+        //Vector3 movement = new Vector3(positionPrefabs[0].x, positionPrefabs[0].y, positionPrefabs[0].z);
 
 
         //transform.position = Vector3.MoveTowards(transform.position, positionPrefabs[0], step);
-        foreach (var item in positionPrefabs)
+        if (positionPrefabs.Count > 0)
         {
-            MovePlayerToObject(item, step);
+            Vector3 newpos = positionPrefabs[0];
+            MovePlayerToObject(newpos, 0, step);
+            
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Pick Up"))
+       
+        if (other.gameObject.CompareTag("Pick Up"))
         {
             other.gameObject.SetActive(false);
             count++;
+            end = true;
             ShowSetCounttext();
         }
     }
