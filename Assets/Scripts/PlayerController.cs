@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     private int count;
     public Text counttext;
     public Text wintext;
-    public 
+    public Camera nonVRCamera;
+    public GameObject prefab;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,7 +19,23 @@ public class PlayerController : MonoBehaviour
         ShowSetCounttext();
         wintext.text = "";
     }
-
+    void GenertateObject()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Press mouse button");
+            RaycastHit hit;
+            Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("hit ttttttttt" + hit.transform.name);
+                if (hit.transform.name == "Ground")
+                {
+                    Instantiate(prefab, hit.point, Quaternion.identity);
+                }
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +43,7 @@ public class PlayerController : MonoBehaviour
         float movevertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(movehorizontal,0.0f,movevertical);
         rb.AddForce(movement * speed);
-       
+        GenertateObject();
     }
     private void OnTriggerEnter(Collider other)
     {
