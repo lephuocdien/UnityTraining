@@ -12,12 +12,18 @@ public class PlayerController : MonoBehaviour
     public Text wintext;
     public Camera nonVRCamera;
     public GameObject prefab;
+    // ArrayList positionPrefabs = new ArrayList();
+    List<Vector3> positionPrefabs = new List<Vector3>();
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         ShowSetCounttext();
         wintext.text = "";
+    }
+    public void MovePlayerToObject(Vector3 obj, float step)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, obj, step);
     }
     void GenertateObject()
     {
@@ -32,6 +38,7 @@ public class PlayerController : MonoBehaviour
                 if (hit.transform.name == "Ground")
                 {
                     Instantiate(prefab, hit.point, Quaternion.identity);
+                    positionPrefabs.Add(hit.point);
                 }
             }
         }
@@ -39,11 +46,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float movehorizontal = Input.GetAxis("Horizontal");
-        float movevertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(movehorizontal,0.0f,movevertical);
-        rb.AddForce(movement * speed);
+        float step = speed * Time.deltaTime;
+        // float movehorizontal = Input.GetAxis("Horizontal");
+        //  float movevertical = Input.GetAxis("Vertical");
+        // Vector3 movement = new Vector3(movehorizontal,0.0f,movevertical);
+        // rb.AddForce(movement * speed);
         GenertateObject();
+        ///move player
+        Vector3 movement = new Vector3(positionPrefabs[0].x, positionPrefabs[0].y, positionPrefabs[0].z);
+
+
+        //transform.position = Vector3.MoveTowards(transform.position, positionPrefabs[0], step);
+        foreach (var item in positionPrefabs)
+        {
+            MovePlayerToObject(item, step);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
