@@ -3,7 +3,11 @@ guid: fde283fdd8b345b40904dfdecf515c92
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - counttext: {instanceID: 0}
+  - wintext: {instanceID: 0}
+  - nonVRCamera: {instanceID: 0}
+  - prefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

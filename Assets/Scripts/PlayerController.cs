@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
     public Text wintext;
     public Camera nonVRCamera;
     public GameObject prefab;
-    // ArrayList positionPrefabs = new ArrayList();
-    //List<Vector3> positionPrefabs = new List<Vector3>();
+    
 
     List<Vector3> positionPrefabs = new List<Vector3>();
    
@@ -38,7 +37,7 @@ public class PlayerController : MonoBehaviour
       
         if (end==true)
         {
-            Debug.Log("MovePlayerToObject end" + obj);
+           // Debug.Log("MovePlayerToObject end" + obj);
             //remove this item
             positionPrefabs.RemoveAt(index);
             end = false;
@@ -48,6 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
            
             RaycastHit hit;
             Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
@@ -56,40 +56,50 @@ public class PlayerController : MonoBehaviour
              
                 if (hit.transform.name == "Ground")
                 {
-                    Instantiate(prefab, hit.point, Quaternion.identity);
+                    prefab.Spawn(hit.point);
+                    //Instantiate(prefab, hit.point, Quaternion.identity);
                     Debug.Log("Add positon " + hit.point);
                     positionPrefabs.Add(hit.point);
                 }
             }
+            
+
         }
     }
     // Update is called once per frame
     void Update()
     {
         float step = speed * Time.deltaTime;
-       
+       //generate position of object after click mouse
         GenertateObject();
        
         //Vector3 movement = new Vector3(positionPrefabs[0].x, positionPrefabs[0].y, positionPrefabs[0].z);
 
 
         //transform.position = Vector3.MoveTowards(transform.position, positionPrefabs[0], step);
+        ///get position of first object
         if (positionPrefabs.Count > 0)
         {
             Vector3 newpos = positionPrefabs[0];
+            ///function to move player to next position
             MovePlayerToObject(newpos, 0, step);
             
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-       
+
+        Debug.Log("1111111111111111");
         if (other.gameObject.CompareTag("Pick Up"))
         {
-            Debug.Log("Destroy"+ other.gameObject.transform.position);
+           // Debug.Log("Destroy"+ other.gameObject.transform.position);
             //other.gameObject.SetActive(false);
-            Destroy(other.gameObject);
+
+
+            Destroy(other.gameObject.transform.parent.gameObject);
             count++;
+            ///may be set end=true here, but have a bug.
+
             Vector3 objp = other.transform.position;
             positionPrefabs.Remove(objp);
             ShowSetCounttext();
