@@ -107,7 +107,8 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.SetActive(false);
 
             //other.gameObject.transform.parent.gameObject.SetActive(false);
-             other.gameObject.transform.parent.gameObject.Kill();
+            other.gameObject.GetComponent<Animator>().SetTrigger("PickUpDie");
+            // other.gameObject.transform.parent.gameObject.Kill();
             count++;
             ///may be set end=true here, but have a bug.
 
@@ -115,6 +116,7 @@ public class PlayerController : MonoBehaviour
             positionPrefabs.Remove(objp);
             ShowSetCounttext();
         }
+       
     }
     void ShowSetCounttext()
     {
