@@ -884,11 +884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde283fdd8b345b40904dfdecf515c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 2
   counttext: {fileID: 2051475621}
   wintext: {fileID: 1372949185}
   nonVRCamera: {fileID: 963194227}
   prefab: {fileID: 3480663838279287707, guid: f4f0424675a764c469586af2d4e19022, type: 3}
+  h: 0
 --- !u!54 &809904371
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1143,6 +1144,7 @@ MonoBehaviour:
   wintext: {fileID: 1372949185}
   nonVRCamera: {fileID: 963194227}
   prefab: {fileID: 3480663838279287707, guid: f4f0424675a764c469586af2d4e19022, type: 3}
+  h: 0
 --- !u!95 &1092778088
 Animator:
   serializedVersion: 3
@@ -1329,7 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3480663838279287707, guid: f4f0424675a764c469586af2d4e19022, type: 3}
-  initialPoolsize: 2
+  initialPoolsize: 1
 --- !u!1 &1819225306
 GameObject:
   m_ObjectHideFlags: 0

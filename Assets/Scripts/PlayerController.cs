@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour
     public Text wintext;
     public Camera nonVRCamera;
     public GameObject prefab;
-    
 
+    private Vector3 currentPosNeedGoto;
     List<Vector3> positionPrefabs = new List<Vector3>();
-   
 
+    public bool h = false;
     private bool end = false;
     void Start()
     {
@@ -27,14 +27,18 @@ public class PlayerController : MonoBehaviour
     }
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
-        
+        currentPosNeedGoto = obj;
         transform.position = Vector3.MoveTowards(transform.position, obj, step);
         float distance = Vector3.Distance(transform.position, obj);
-        if(distance <0.7)
+        //Debug.Log("Distance :" + distance);
+        //if (distance < 0.7)
+        //{
+        //    end = true;
+        //}
+        if(h==true)
         {
-            end = true;
+            int jjj = 4554;
         }
-      
         if (end==true)
         {
            // Debug.Log("MovePlayerToObject end" + obj);
@@ -58,7 +62,7 @@ public class PlayerController : MonoBehaviour
                 {
                     prefab.Spawn(hit.point);
                     //Instantiate(prefab, hit.point, Quaternion.identity);
-                  //  Debug.Log("Add positon " + hit.point);
+                    Debug.Log("Add positon " + hit.point);
                     positionPrefabs.Add(hit.point);
                 }
             }
@@ -97,6 +101,20 @@ public class PlayerController : MonoBehaviour
             
         }
     }
+    private int findindex(Vector3 ob)
+    {
+        int vt = -1;
+        for (int i = 0; i < positionPrefabs.Count; i++)
+        {
+            Vector3 temp = positionPrefabs[i];
+            if (temp.x == ob.x && temp.z == ob.z)
+            {
+                vt = i;
+                break;
+            }
+        }
+        return vt;
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -108,12 +126,27 @@ public class PlayerController : MonoBehaviour
 
             //other.gameObject.transform.parent.gameObject.SetActive(false);
             other.gameObject.GetComponent<Animator>().SetTrigger("PickUpDie");
+
             // other.gameObject.transform.parent.gameObject.Kill();
             count++;
             ///may be set end=true here, but have a bug.
+            
 
-            Vector3 objp = other.transform.position;
-            positionPrefabs.Remove(objp);
+            Vector3 objp = other.gameObject.transform.position;
+            if (objp.x == currentPosNeedGoto.x && objp.z==currentPosNeedGoto.z)
+            {
+                h = true;
+               // Debug.Log("11111111111111111");
+                end = true;
+            }
+
+           UnityEngine.Vector3 objpremove = new Vector3(objp.x, 0.0f, objp.z);
+            int j= findindex(objpremove);
+            if (j > 0)
+            {
+               // Debug.Log("Remove at " + j);
+                positionPrefabs.RemoveAt(j);
+            }
             ShowSetCounttext();
         }
        
