@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
                 {
                     prefab.Spawn(hit.point);
                     //Instantiate(prefab, hit.point, Quaternion.identity);
-                    Debug.Log("Add positon " + hit.point);
+                  //  Debug.Log("Add positon " + hit.point);
                     positionPrefabs.Add(hit.point);
                 }
             }
