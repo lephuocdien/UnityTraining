@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log("1111111111111111");
+      
         if (other.gameObject.CompareTag("Pick Up"))
         {
             // Debug.Log("Destroy"+ other.gameObject.transform.position);
