@@ -70,15 +70,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //
-       /*
+       
         if(GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
-            transform.GetComponent<Animator>().enabled = false;
+            transform.GetChild(0).GetComponent<Animator>().enabled = false;
         }
         else
         {
             transform.GetChild(0).GetComponent<Animator>().enabled = true;
-        } */
+        } 
         //
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.SetActive(false);
 
             //other.gameObject.transform.parent.gameObject.SetActive(false);
-             Destroy(other.gameObject.transform.parent.gameObject);
+             other.gameObject.transform.parent.gameObject.Kill();
             count++;
             ///may be set end=true here, but have a bug.
 

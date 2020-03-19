@@ -127,7 +127,10 @@ public class Pool : MonoBehaviour
         obj.transform.localEulerAngles = Vector3.zero;
 
         aliveInstances.RemoveAt(index);
-        pooledInstances.Push(obj);
+        if (pooledInstances.Count < initialPoolsize)
+            pooledInstances.Push(obj);
+        else
+            Destroy(obj);
     }
 
     public bool IsResponsibleForObject(GameObject obj)

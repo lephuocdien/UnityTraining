@@ -884,7 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde283fdd8b345b40904dfdecf515c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
   counttext: {fileID: 2051475621}
   wintext: {fileID: 1372949185}
   nonVRCamera: {fileID: 963194227}
