@@ -92,11 +92,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("1111111111111111");
         if (other.gameObject.CompareTag("Pick Up"))
         {
-           // Debug.Log("Destroy"+ other.gameObject.transform.position);
+            // Debug.Log("Destroy"+ other.gameObject.transform.position);
             //other.gameObject.SetActive(false);
 
-
-            Destroy(other.gameObject.transform.parent.gameObject);
+            //other.gameObject.transform.parent.gameObject.SetActive(false);
+             Destroy(other.gameObject.transform.parent.gameObject);
             count++;
             ///may be set end=true here, but have a bug.
 
