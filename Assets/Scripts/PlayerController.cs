@@ -69,17 +69,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //
-       /*
+       
         if(GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
             //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         }
         else
         {
-           // transform.GetChild(0).GetComponent<Animator>().enabled = true;
+            //this mean use idle state
+            transform.GetComponent<Animator>().SetTrigger("emptypickup");
+            transform.GetComponent<Animator>().ResetTrigger("isWalking");
+            
         } 
         //
-        */
+        
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
         GenertateObject();
@@ -121,6 +124,7 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.SetActive(false);
 
             //other.gameObject.transform.parent.gameObject.SetActive(false);
+            transform.GetComponent<Animator>().SetTrigger("isFight");
             other.gameObject.GetComponent<Animator>().SetTrigger("PickUpDie");
 
             // other.gameObject.transform.parent.gameObject.Kill();
