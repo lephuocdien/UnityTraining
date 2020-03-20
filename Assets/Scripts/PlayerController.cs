@@ -28,10 +28,11 @@ public class PlayerController : MonoBehaviour
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
         currentPosNeedGoto = obj;
-        //  transform.position = Vector3.MoveTowards(transform.position, obj, step);
+        transform.LookAt(obj);
+        transform.position = Vector3.MoveTowards(transform.position, obj, step);
        
         transform.GetComponent<Animator>().SetTrigger("isWalking");
-        transform.LookAt(obj);
+       
         float distance = Vector3.Distance(transform.position, obj);
         
         if (end==true)
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
             //remove this item
             positionPrefabs.RemoveAt(index);
             end = false;
+            currentPosNeedGoto = Vector3.zero;
         }
     }
     void GenertateObject()
@@ -57,7 +59,7 @@ public class PlayerController : MonoBehaviour
                 {
                     prefab.Spawn(hit.point);
                     //Instantiate(prefab, hit.point, Quaternion.identity);
-                    //Debug.Log("Add positon " + hit.point);
+                    Debug.Log("Add positon " + hit.point);
                     positionPrefabs.Add(hit.point);
                 }
             }
@@ -72,7 +74,8 @@ public class PlayerController : MonoBehaviour
        
         if(GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
-            //transform.GetChild(0).GetComponent<Animator>().enabled = false;
+            transform.GetComponent<Animator>().ResetTrigger("emptypickup");
+            //transform.GetComponent<Animator>().enabled = false;
         }
         else
         {
@@ -86,16 +89,11 @@ public class PlayerController : MonoBehaviour
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
         GenertateObject();
-       
-        //Vector3 movement = new Vector3(positionPrefabs[0].x, positionPrefabs[0].y, positionPrefabs[0].z);
-
-
-        //transform.position = Vector3.MoveTowards(transform.position, positionPrefabs[0], step);
-        ///get position of first object
+      
         if (positionPrefabs.Count > 0)
         {
             Vector3 newpos = positionPrefabs[0];
-            ///function to move player to next position
+      
             MovePlayerToObject(newpos, 0, step);
             
         }
@@ -125,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
             //other.gameObject.transform.parent.gameObject.SetActive(false);
             transform.GetComponent<Animator>().SetTrigger("isFight");
-            other.gameObject.GetComponent<Animator>().SetTrigger("PickUpDie");
+            other.gameObject.transform.GetComponent<Animator>().SetTrigger("PickUpDie");
 
             // other.gameObject.transform.parent.gameObject.Kill();
             count++;

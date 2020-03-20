@@ -1041,7 +1041,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: b09c62460a2e3c04a949a96ce253f513,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b09c62460a2e3c04a949a96ce253f513,
         type: 3}
@@ -1083,6 +1083,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: b09c62460a2e3c04a949a96ce253f513,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: b09c62460a2e3c04a949a96ce253f513,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: b09c62460a2e3c04a949a96ce253f513,
         type: 3}
       propertyPath: m_Controller
@@ -1096,7 +1106,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: b09c62460a2e3c04a949a96ce253f513,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b09c62460a2e3c04a949a96ce253f513, type: 3}
@@ -1389,7 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde283fdd8b345b40904dfdecf515c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 3
   counttext: {fileID: 2051475621}
   wintext: {fileID: 1372949185}
   nonVRCamera: {fileID: 963194227}
@@ -1422,8 +1432,26 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.1388872
-  m_Center: {x: 0, y: 0.8885155, z: 0.2496283}
+  m_Radius: 0.20007014
+  m_Center: {x: 0, y: -0.05030155, z: 0.2496283}
+--- !u!143 &1618562018
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618562012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 3
+  m_Radius: 0.6
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1640733570
 GameObject:
   m_ObjectHideFlags: 0
