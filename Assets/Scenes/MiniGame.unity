@@ -884,7 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde283fdd8b345b40904dfdecf515c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 4
   counttext: {fileID: 2051475621}
   wintext: {fileID: 1372949185}
   nonVRCamera: {fileID: 963194227}
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3480663838279287707, guid: f4f0424675a764c469586af2d4e19022, type: 3}
-  initialPoolsize: 1
+  initialPoolsize: 10
 --- !u!1 &1819225306
 GameObject:
   m_ObjectHideFlags: 0
