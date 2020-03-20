@@ -28,17 +28,12 @@ public class PlayerController : MonoBehaviour
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
         currentPosNeedGoto = obj;
-        transform.position = Vector3.MoveTowards(transform.position, obj, step);
+        //  transform.position = Vector3.MoveTowards(transform.position, obj, step);
+       
+        transform.GetComponent<Animator>().SetTrigger("isWalking");
+        transform.LookAt(obj);
         float distance = Vector3.Distance(transform.position, obj);
-        //Debug.Log("Distance :" + distance);
-        //if (distance < 0.7)
-        //{
-        //    end = true;
-        //}
-        if(h==true)
-        {
-            int jjj = 4554;
-        }
+        
         if (end==true)
         {
            // Debug.Log("MovePlayerToObject end" + obj);
@@ -74,16 +69,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //
-       
+       /*
         if(GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
-            transform.GetChild(0).GetComponent<Animator>().enabled = false;
+            //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         }
         else
         {
-            transform.GetChild(0).GetComponent<Animator>().enabled = true;
+           // transform.GetChild(0).GetComponent<Animator>().enabled = true;
         } 
         //
+        */
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
         GenertateObject();
