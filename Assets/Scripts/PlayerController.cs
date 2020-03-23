@@ -38,6 +38,17 @@ public class PlayerController : MonoBehaviour
     }
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
+
+        //
+        Material aa = transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+        ChangeRenderMode(aa, BlendMode.Transparent);
+        for (float ft = 0; ft <= 1; ft += 0.1f)
+        {
+            Color c = aa.color;
+            c.a = ft;
+            aa.color = c;
+        }
+        //
         currentPosNeedGoto = obj;
         transform.LookAt(obj);
          transform.position = Vector3.MoveTowards(transform.position, obj, step);
@@ -49,8 +60,9 @@ public class PlayerController : MonoBehaviour
         
         if (end==true)
         {
-           // Debug.Log("MovePlayerToObject end" + obj);
+            // Debug.Log("MovePlayerToObject end" + obj);
             //remove this item
+            ontriggerE = false;
             positionPrefabs.RemoveAt(index);
             end = false;
             currentPosNeedGoto = Vector3.zero;
@@ -78,7 +90,7 @@ public class PlayerController : MonoBehaviour
                     if (j == 1)
                         abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 1);
                     else if (j == 2)
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 2);
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 1);
                     else
                         abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 3);
                     positionPrefabs.Add(hit.point);
@@ -116,14 +128,22 @@ public class PlayerController : MonoBehaviour
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
         GenertateObject();
-        
+
         if (positionPrefabs.Count > 0)
         {
             Vector3 newpos = positionPrefabs[0];
-     
-            //if(ontriggerE==false)
-             MovePlayerToObject(newpos, 0, step);
-            //else
+
+            if (ontriggerE == false)
+            {
+                MovePlayerToObject(newpos, 0, step);
+            }
+            else
+            {
+                //coroutine here
+                StartCoroutine(ActionAfterSecond(3.0f, newpos,0,step));
+
+              //  MovePlayerToObject(newpos, 0, step);
+            }
             
         }
     }
@@ -194,23 +214,28 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    IEnumerator ActionAfterSecond(float second)
+    IEnumerator ActionAfterSecond(float second, Vector3 obj, int index, float step)
     {
         yield return new WaitForSeconds(second);
         Debug.Log("Hii :" + Time.time);
-        ChangeAlphaToValue(1.0f);
+        ChangeAlphaToValue(1.0f,obj,index,step);
     }
-    private void ChangeAlphaToValue(float value)
+    private void ChangeAlphaToValue(float value, Vector3 obj, int index, float step)
     {
-        transform.localPosition = Vector3.zero;
-        //Material aa = transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
-        //ChangeRenderMode(aa, BlendMode.Transparent);
-        //for (float ft = value; ft >= 0; ft -= 0.1f)
-        //{
-        //    Color c = aa.color;
-        //    c.a = ft;
-        //    aa.color = c;
-        //}
+        Instantiate(particleDie, transform.localPosition, Quaternion.identity);
+        transform.GetComponent<Animator>().SetTrigger("hoisinh");
+        transform.GetComponent<Animator>().SetInteger("CharacterDie", 0);
+        transform.LookAt(obj);
+        MovePlayerToObject(obj, 0, step);
+
+        Material aa = transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+        ChangeRenderMode(aa, BlendMode.Transparent);
+        for (float ft = value; ft >= 0; ft -= 0.1f)
+        {
+            Color c = aa.color;
+            c.a = ft;
+            aa.color = c;
+        }
     }
     /// <summary>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -232,10 +257,10 @@ public class PlayerController : MonoBehaviour
             if(vlcolor==1)//mean red cube
             {
               
-                
-                Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
+              //  Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
 
-
+                ontriggerE = true;
+                transform.GetComponent<Animator>().SetInteger("CharacterDie",1);
                 Debug.Log("Meet red cube ");
                 //  Instantiate(particleDie, other.transform.position, Quaternion.identity);
 
@@ -244,8 +269,8 @@ public class PlayerController : MonoBehaviour
                 // transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
                 // transform.GetComponent<Animator>().ResetTrigger("emptypickup");
                 //  StartCoroutine(ActionAfterSecond(3));
-                transform.localPosition = Vector3.zero;
-                Instantiate(particleDie, transform.localPosition, Quaternion.identity);
+                //transform.localPosition = Vector3.zero;
+                //Instantiate(particleDie, transform.localPosition, Quaternion.identity);
                // StartCoroutine(ActionAfterSecond(3));
                
 
