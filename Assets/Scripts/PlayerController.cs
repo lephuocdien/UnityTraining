@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
 
     public  GameObject particleExplosive;
+
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -155,9 +157,10 @@ public class PlayerController : MonoBehaviour
 
 
                 Debug.Log("Meet red cube ");
-               //charecter will die
-
-                // play particle
+                //charecter will die
+                // transform.position.mo.Set(0, 0, 0);
+                
+                
             }
 
 
