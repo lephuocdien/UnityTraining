@@ -20,6 +20,7 @@ public class ScriptDieBehaviorro : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.transform.parent.gameObject.Kill();
+
        /// Debug.Log("=============================121 OnStateExi ==========================");
         //animator.gameObject.GetComponent<Animator>().ResetTrigger("PickUpDie");
     }

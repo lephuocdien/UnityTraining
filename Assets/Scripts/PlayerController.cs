@@ -57,14 +57,31 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit))
             {
              
                 if (hit.transform.name == "Ground")
                 {
-                    prefab.Spawn(hit.point);
-                    //Instantiate(prefab, hit.point, Quaternion.identity);
-                    Debug.Log("Add positon " + hit.point);
-                    positionPrefabs.Add(hit.point);
+
+
+                        //  prefab.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial.color = Color.red;
+                        //int j = Random.Range(1, 4);
+                        //if(j==1)
+                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorRed");
+                        //else if(j==2)
+                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorGreen");
+                        //else
+                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorBlue");
+
+                       // GameObject abc = prefab;
+                        GameObject abc=prefab.Spawn(hit.point);
+                      //  abc.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hfghasdasdasfghf");
+                       
+
+
+                        //Instantiate(prefab, hit.point, Quaternion.identity);
+                        Debug.Log("Add positon " + hit.point);
+                        positionPrefabs.Add(hit.point);
                 }
             }
             
@@ -80,6 +97,7 @@ public class PlayerController : MonoBehaviour
         //else
         //    gameObject.GetComponentInParent<ParticleSystem>().Stop();
         //
+       // transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorBlue");
 
         if (GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
@@ -127,24 +145,23 @@ public class PlayerController : MonoBehaviour
       
         if (other.gameObject.CompareTag("Pick Up"))
         {
-            // Debug.Log("Destroy"+ other.gameObject.transform.position);
-            //other.gameObject.SetActive(false);
+            //check color of pickup cube
+            if(other.gameObject.GetComponent<Renderer>().material.color == Color.red)
+            {
+                Debug.Log("Meet red cube");
+            }
 
-            //other.gameObject.transform.parent.gameObject.SetActive(false);
             transform.GetComponent<Animator>().SetTrigger("isFight");
-            other.gameObject.transform.GetComponent<Animator>().SetTrigger("PickUpDie");
-            //
-          //  playparticle = true;
-            // other.gameObject.transform.parent.gameObject.Kill();
+            other.gameObject.transform.GetComponent<Animator>().SetTrigger("ChangeColorBlue");           
             count++;
-            ///may be set end=true here, but have a bug.
+            
             
 
             Vector3 objp = other.gameObject.transform.position;
             if (objp.x == currentPosNeedGoto.x && objp.z==currentPosNeedGoto.z)
             {
                 h = true;
-               // Debug.Log("11111111111111111");
+               
                 end = true;
             }
 
