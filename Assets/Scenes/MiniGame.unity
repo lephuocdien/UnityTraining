@@ -916,7 +916,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -0.22, y: 11.95, z: -12.04}
+  m_LocalPosition: {x: -1.1, y: 8.89, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1296,5 +1296,10 @@ PrefabInstance:
       propertyPath: nonVRCamera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 3673046702808521907, guid: 623277bfa9bb1114fad7a3a3afcb5fda,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ac95f10372c09b4fa3e62f5588f7c0b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 623277bfa9bb1114fad7a3a3afcb5fda, type: 3}

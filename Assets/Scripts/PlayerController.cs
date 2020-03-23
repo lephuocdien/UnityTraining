@@ -23,8 +23,9 @@ public class PlayerController : MonoBehaviour
 
 
     public  GameObject particleExplosive;
+    public GameObject particleDie;
 
-    
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -67,16 +68,9 @@ public class PlayerController : MonoBehaviour
              
                 if (hit.transform.name == "Ground")
                 {
+                    
                     GameObject abc = prefab.Spawn(hit.point);
-                    int j = Random.Range(1, 4);
-                    if (j == 1)
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee",1);//red
-                    else if (j == 2)
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 2);//green
-                    else
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 3);//blue
-
-                    //Instantiate(prefab, hit.point, Quaternion.identity);
+                    abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 1);//red                    
                     Debug.Log("Add positon " + hit.point);
                         positionPrefabs.Add(hit.point);
                 }
@@ -136,6 +130,72 @@ public class PlayerController : MonoBehaviour
         }
         return vt;
     }
+    /// <summary>
+    /// /////////////////////////////////////////////////
+    /// </summary>
+     public enum BlendMode
+     {
+         Opaque,
+         Cutout,
+         Fade,
+         Transparent
+     }
+    public static void ChangeRenderMode(Material standardShaderMaterial, BlendMode blendMode)
+    {
+        switch (blendMode)
+        {
+            case BlendMode.Opaque:
+                standardShaderMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                standardShaderMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                standardShaderMaterial.SetInt("_ZWrite", 1);
+                standardShaderMaterial.DisableKeyword("_ALPHATEST_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHABLEND_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                standardShaderMaterial.renderQueue = -1;
+                break;
+            case BlendMode.Cutout:
+                standardShaderMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                standardShaderMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                standardShaderMaterial.SetInt("_ZWrite", 1);
+                standardShaderMaterial.EnableKeyword("_ALPHATEST_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHABLEND_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                standardShaderMaterial.renderQueue = 2450;
+                break;
+            case BlendMode.Fade:
+                standardShaderMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                standardShaderMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                standardShaderMaterial.SetInt("_ZWrite", 0);
+                standardShaderMaterial.DisableKeyword("_ALPHATEST_ON");
+                standardShaderMaterial.EnableKeyword("_ALPHABLEND_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                standardShaderMaterial.renderQueue = 3000;
+                break;
+            case BlendMode.Transparent:
+                standardShaderMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                standardShaderMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                standardShaderMaterial.SetInt("_ZWrite", 0);
+                standardShaderMaterial.DisableKeyword("_ALPHATEST_ON");
+                standardShaderMaterial.DisableKeyword("_ALPHABLEND_ON");
+                standardShaderMaterial.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                standardShaderMaterial.renderQueue = 3000;
+                break;
+        }
+
+    }
+
+    private void SetAllMaterialTransparent()
+    {
+      // Material[] j = transform.GetComponent<Renderer>().materials;
+        foreach (Material item in transform.GetComponent<Renderer>().materials)
+        {
+           
+        }
+    }
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
 
@@ -157,10 +217,16 @@ public class PlayerController : MonoBehaviour
 
 
                 Debug.Log("Meet red cube ");
+                //    SetAllMaterialTransparent();
                 //charecter will die
-                // transform.position.mo.Set(0, 0, 0);
-                
-                
+                //  transform.position.se
+                // Vector3 obj = new Vector3(0, 0, 0);
+                // transform.LookAt(obj);
+                // Vector3.MoveTowards(transform.position, new Vector3(0,0,0), 1);
+                // Material transo =  transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().sharedMaterial;
+                //ChangeRenderMode(transo, BlendMode.Transparent);
+                transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
+                transform.GetComponent<Animator>().ResetTrigger("emptypickup");
             }
 
 

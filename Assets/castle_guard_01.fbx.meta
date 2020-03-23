@@ -8,20 +8,25 @@ ModelImporter:
     second: mixamo.com
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guard_02
+    second: {fileID: 2100000, guid: 9ac95f10372c09b4fa3e62f5588f7c0b, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Guard_02__diffuse
-    second: {fileID: 2800000, guid: 41b77c17934e36f4a843f29151ace881, type: 3}
+    second: {fileID: 2800000, guid: c976d4ca67d4f094cb8b7550c8903a3d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Guard_02__normal
-    second: {fileID: 2800000, guid: b5eb76dee6b86b543bf8e457aa1d5627, type: 3}
+    second: {fileID: 2800000, guid: ad482bd44238e77498aa5526e52f0a0d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Guard_02__specular
-    second: {fileID: 2800000, guid: 493f41d65ccff7d4bb362af154d41605, type: 3}
+    second: {fileID: 2800000, guid: 5926982645c1e654fadcf92246eb1ac1, type: 3}
   materials:
     importMaterials: 1
     materialName: 0
@@ -86,6 +91,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips:
+  - b89c8fcf58bf8ad4b9d9486427e9e05f
   - 262e177b3142dbf4ca7aa75f5f779d95
   - ebe9e1054d0af1b4d949bedcbc6c0931
   - 4e52a3c33afb47343a538bc84dba9dab
