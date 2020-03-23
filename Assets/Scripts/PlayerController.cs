@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public  GameObject particleExplosive;
     public GameObject particleDie;
 
+    private bool ontriggerE = false;
 
     void Start()
     {
@@ -39,8 +40,9 @@ public class PlayerController : MonoBehaviour
     {
         currentPosNeedGoto = obj;
         transform.LookAt(obj);
-        transform.position = Vector3.MoveTowards(transform.position, obj, step);
-       
+         transform.position = Vector3.MoveTowards(transform.position, obj, step);
+       // transform.localPosition = Vector3.Lerp(transform.position, obj, 1);
+
         transform.GetComponent<Animator>().SetTrigger("isWalking");
        
         float distance = Vector3.Distance(transform.position, obj);
@@ -119,7 +121,9 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 newpos = positionPrefabs[0];
      
-            MovePlayerToObject(newpos, 0, step);
+            //if(ontriggerE==false)
+             MovePlayerToObject(newpos, 0, step);
+            //else
             
         }
     }
@@ -190,12 +194,23 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-    IEnumerator DoAnimation()
+    IEnumerator ActionAfterSecond(float second)
     {
-        //animation.CrossFade("MyAnimation");
-        yield return new WaitForSeconds(2f); // wait for two seconds.
-        Debug.Log("This happens 2 seconds later. Tada.");
+        yield return new WaitForSeconds(second);
+        Debug.Log("Hii :" + Time.time);
+        ChangeAlphaToValue(1.0f);
+    }
+    private void ChangeAlphaToValue(float value)
+    {
+        transform.localPosition = Vector3.zero;
+        //Material aa = transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+        //ChangeRenderMode(aa, BlendMode.Transparent);
+        //for (float ft = value; ft >= 0; ft -= 0.1f)
+        //{
+        //    Color c = aa.color;
+        //    c.a = ft;
+        //    aa.color = c;
+        //}
     }
     /// <summary>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -225,11 +240,16 @@ public class PlayerController : MonoBehaviour
                 //  Instantiate(particleDie, other.transform.position, Quaternion.identity);
 
                 //Animator animate = transform.GetComponent<Animator>();
-               // animate.GetCurrentAnimatorStateInfo(0).IsTag;
-               // transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
+                // animate.GetCurrentAnimatorStateInfo(0).IsTag;
+                // transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
                 // transform.GetComponent<Animator>().ResetTrigger("emptypickup");
-
+                //  StartCoroutine(ActionAfterSecond(3));
+                transform.localPosition = Vector3.zero;
+                Instantiate(particleDie, transform.localPosition, Quaternion.identity);
+               // StartCoroutine(ActionAfterSecond(3));
                
+
+
             }
 
 
