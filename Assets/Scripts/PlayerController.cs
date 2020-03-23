@@ -16,18 +16,21 @@ public class PlayerController : MonoBehaviour
     private Vector3 currentPosNeedGoto;
     List<Vector3> positionPrefabs = new List<Vector3>();
 
-    public bool h = false;
+   // public bool h = false;
     private bool end = false;
 
-    public bool playparticle = false;
+    //public bool playparticle = false;
+
+
+    public  GameObject particleExplosive;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         ShowSetCounttext();
         wintext.text = "";
-       // gameObject.GetComponentInParent<ParticleSystem>().Stop();
-        //
+        
+        
     }
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
@@ -65,11 +68,11 @@ public class PlayerController : MonoBehaviour
                     GameObject abc = prefab.Spawn(hit.point);
                     int j = Random.Range(1, 4);
                     if (j == 1)
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeRed",1);
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee",1);//red
                     else if (j == 2)
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeGreen",1);
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 2);//green
                     else
-                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeBlue", 1);
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 3);//blue
 
                     //Instantiate(prefab, hit.point, Quaternion.identity);
                     Debug.Log("Add positon " + hit.point);
@@ -137,22 +140,28 @@ public class PlayerController : MonoBehaviour
       
         if (other.gameObject.CompareTag("Pick Up"))
         {
-            //check color of pickup cube
-            if(other.gameObject.GetComponent<MeshRenderer>().sharedMaterial.color == Color.red)
-            {
-                Debug.Log("Meet red cube");
-            }
+            
 
             transform.GetComponent<Animator>().SetTrigger("isFight");
             other.gameObject.transform.GetComponent<Animator>().SetTrigger("PickUpDie");           
             count++;
-            
-            
+            // other.gameObject.tran.GetComponent<Animator>().
+            int vlcolor = other.gameObject.transform.GetComponent<Animator>().GetInteger("colorofmeeeee");
+            if(vlcolor==1)//mean red cube
+            {
+               // particle = GameObject.Find("BigExplosion");
+               // particle.active = true;
+                
+                Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
+                Debug.Log("Meet red cube ");
+                // play particle
+            }
+
 
             Vector3 objp = other.gameObject.transform.position;
             if (objp.x == currentPosNeedGoto.x && objp.z==currentPosNeedGoto.z)
             {
-                h = true;
+              
                
                 end = true;
             }

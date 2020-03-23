@@ -1278,7 +1278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4388947112716342, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3480663838279287707, guid: f4f0424675a764c469586af2d4e19022, type: 3}
-  initialPoolsize: 2
+  initialPoolsize: 3
 --- !u!1 &1819225306
 GameObject:
   m_ObjectHideFlags: 0
