@@ -66,13 +66,20 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
              
-                if (hit.transform.name == "Ground")
+                if (hit.transform.name== "Ground")
                 {
                     
                     GameObject abc = prefab.Spawn(hit.point);
-                    abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 1);//red                    
-                    Debug.Log("Add positon " + hit.point);
-                        positionPrefabs.Add(hit.point);
+                                    
+                 
+                    int j = Random.Range(1, 4);
+                    if (j == 1)
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 1);
+                    else if (j == 2)
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 2);
+                    else
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("colorofmeeeee", 3);
+                    positionPrefabs.Add(hit.point);
                 }
             }
             
@@ -107,11 +114,11 @@ public class PlayerController : MonoBehaviour
         float step = speed * Time.deltaTime;
        //generate position of object after click mouse
         GenertateObject();
-      
+        
         if (positionPrefabs.Count > 0)
         {
             Vector3 newpos = positionPrefabs[0];
-      
+     
             MovePlayerToObject(newpos, 0, step);
             
         }
@@ -184,13 +191,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void SetAllMaterialTransparent()
+    IEnumerator DoAnimation()
     {
-      // Material[] j = transform.GetComponent<Renderer>().materials;
-        foreach (Material item in transform.GetComponent<Renderer>().materials)
-        {
-           
-        }
+        //animation.CrossFade("MyAnimation");
+        yield return new WaitForSeconds(2f); // wait for two seconds.
+        Debug.Log("This happens 2 seconds later. Tada.");
     }
     /// <summary>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -217,16 +222,14 @@ public class PlayerController : MonoBehaviour
 
 
                 Debug.Log("Meet red cube ");
-                //    SetAllMaterialTransparent();
-                //charecter will die
-                //  transform.position.se
-                // Vector3 obj = new Vector3(0, 0, 0);
-                // transform.LookAt(obj);
-                // Vector3.MoveTowards(transform.position, new Vector3(0,0,0), 1);
-                // Material transo =  transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().sharedMaterial;
-                //ChangeRenderMode(transo, BlendMode.Transparent);
-                transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
-                transform.GetComponent<Animator>().ResetTrigger("emptypickup");
+                //  Instantiate(particleDie, other.transform.position, Quaternion.identity);
+
+                //Animator animate = transform.GetComponent<Animator>();
+               // animate.GetCurrentAnimatorStateInfo(0).IsTag;
+               // transform.GetComponent<Animator>().SetInteger("CharacterDie", 1);//red
+                // transform.GetComponent<Animator>().ResetTrigger("emptypickup");
+
+               
             }
 
 
