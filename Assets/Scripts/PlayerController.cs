@@ -149,11 +149,14 @@ public class PlayerController : MonoBehaviour
             int vlcolor = other.gameObject.transform.GetComponent<Animator>().GetInteger("colorofmeeeee");
             if(vlcolor==1)//mean red cube
             {
-               // particle = GameObject.Find("BigExplosion");
-               // particle.active = true;
+              
                 
                 Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
+
+
                 Debug.Log("Meet red cube ");
+               //charecter will die
+
                 // play particle
             }
 
