@@ -56,31 +56,23 @@ public class PlayerController : MonoBehaviour
            
             RaycastHit hit;
             Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+           
             if (Physics.Raycast(ray, out hit))
             {
              
                 if (hit.transform.name == "Ground")
                 {
+                    GameObject abc = prefab.Spawn(hit.point);
+                    int j = Random.Range(1, 4);
+                    if (j == 1)
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeRed",1);
+                    else if (j == 2)
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeGreen",1);
+                    else
+                        abc.transform.GetChild(0).GetComponent<Animator>().SetInteger("okChangeBlue", 1);
 
-
-                        //  prefab.transform.GetChild(0).GetComponent<MeshRenderer>().sharedMaterial.color = Color.red;
-                        //int j = Random.Range(1, 4);
-                        //if(j==1)
-                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorRed");
-                        //else if(j==2)
-                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorGreen");
-                        //else
-                        //        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorBlue");
-
-                       // GameObject abc = prefab;
-                        GameObject abc=prefab.Spawn(hit.point);
-                      //  abc.transform.GetChild(0).GetComponent<Animator>().SetTrigger("hfghasdasdasfghf");
-                       
-
-
-                        //Instantiate(prefab, hit.point, Quaternion.identity);
-                        Debug.Log("Add positon " + hit.point);
+                    //Instantiate(prefab, hit.point, Quaternion.identity);
+                    Debug.Log("Add positon " + hit.point);
                         positionPrefabs.Add(hit.point);
                 }
             }
@@ -146,13 +138,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Pick Up"))
         {
             //check color of pickup cube
-            if(other.gameObject.GetComponent<Renderer>().material.color == Color.red)
+            if(other.gameObject.GetComponent<MeshRenderer>().sharedMaterial.color == Color.red)
             {
                 Debug.Log("Meet red cube");
             }
 
             transform.GetComponent<Animator>().SetTrigger("isFight");
-            other.gameObject.transform.GetComponent<Animator>().SetTrigger("ChangeColorBlue");           
+            other.gameObject.transform.GetComponent<Animator>().SetTrigger("PickUpDie");           
             count++;
             
             
