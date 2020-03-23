@@ -18,12 +18,16 @@ public class PlayerController : MonoBehaviour
 
     public bool h = false;
     private bool end = false;
+
+    public bool playparticle = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         ShowSetCounttext();
         wintext.text = "";
+       // gameObject.GetComponentInParent<ParticleSystem>().Stop();
+        //
     }
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
@@ -71,8 +75,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //
-       
-        if(GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
+        //if (playparticle)
+        //    gameObject.GetComponentInParent<ParticleSystem>().Play();
+        //else
+        //    gameObject.GetComponentInParent<ParticleSystem>().Stop();
+        //
+
+        if (GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
         {
             transform.GetComponent<Animator>().ResetTrigger("emptypickup");
             //transform.GetComponent<Animator>().enabled = false;
@@ -124,7 +133,8 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.transform.parent.gameObject.SetActive(false);
             transform.GetComponent<Animator>().SetTrigger("isFight");
             other.gameObject.transform.GetComponent<Animator>().SetTrigger("PickUpDie");
-
+            //
+          //  playparticle = true;
             // other.gameObject.transform.parent.gameObject.Kill();
             count++;
             ///may be set end=true here, but have a bug.
