@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 newpos = positionPrefabs[0];
 
-            if (ontriggerE == false)
+           if (ontriggerE == false)
             {
                 MovePlayerToObject(newpos, 0, step);
             }
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
             if(vlcolor==1)//mean red cube
             {
               
-              //  Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
+                Instantiate(particleExplosive, other.transform.position, Quaternion.identity);
 
                 ontriggerE = true;
                 transform.GetComponent<Animator>().SetInteger("CharacterDie",1);
