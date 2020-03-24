@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
         //
         Material aa = transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
-        ChangeRenderMode(aa, BlendMode.Transparent);
+        ChangeRenderMode(aa, BlendMode.Opaque);
         for (float ft = 0; ft <= 1; ft += 0.1f)
         {
             Color c = aa.color;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         }
         //
         currentPosNeedGoto = obj;
-        transform.LookAt(obj);
+        transform.LookAt(obj,Vector3.up);
          transform.position = Vector3.MoveTowards(transform.position, obj, step);
        // transform.localPosition = Vector3.Lerp(transform.position, obj, 1);
 
