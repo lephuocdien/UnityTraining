@@ -1,27 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
-    public void Exit()
+    public void Exitgame()
     {
         Application.Quit();
     }
-    // Start is called before the first frame update
-    public void GotoOption()
+    public void playgame()
     {
-
-    }
-    public void GotoPlay()
-    {
-
+        PlayerController.getInstance().PlayGame();
     }
     void Start()
     {
         
-    }
 
+
+    }
+    public void PauseGame()
+    {
+        PlayerController.getInstance().pausegame();
+       
+    }
+    public void ResumeGame()
+    {
+        PlayerController.getInstance().resumeGame();
+    }
     // Update is called once per frame
     void Update()
     {

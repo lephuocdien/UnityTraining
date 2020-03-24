@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public Text counttext;
     public Text wintext;
     public Camera nonVRCamera;
-    public GameObject prefab;
+    public   GameObject prefab;
 
     private Vector3 currentPosNeedGoto;
     List<Vector3> positionPrefabs = new List<Vector3>();
@@ -22,19 +23,70 @@ public class PlayerController : MonoBehaviour
     //public bool playparticle = false;
 
 
-    public  GameObject particleExplosive;
-    public GameObject particleDie;
+    public GameObject particleExplosive;
+    public   GameObject particleDie;
 
     private bool ontriggerE = false;
+    public Image greenImage;
+    public Text btn;
+    private float TimePassed = 0;
+    public static PlayerController _instane;
+    private bool _pausegame = true;
 
+    public static PlayerController getInstance()
+    {
+        if (_instane == null)
+        {
+            Debug.Log("erorrrrrrrrrrrrrrrr");
+        }
+        
+
+        return _instane;
+    }
+    public void Awake()
+    {
+        if (_instane == null)
+            _instane = this;
+    }
+    public void PlayGame()
+    {
+        _pausegame = false;
+        gameObject.GetComponent<Animator>().enabled = true;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         ShowSetCounttext();
         wintext.text = "";
+        greenImage.GetComponent<Image>().fillAmount = 1.0f;
+        gameObject.GetComponent<Animator>().enabled = false;
+
+      
+        /*       
+        GameObject gameObjectArray = GameObject.FindGameObjectWithTag("optionmenu");
+        gameObjectArray.SetActive(false);
+
+        GameObject gameObjectArray1 = GameObject.FindGameObjectWithTag("playgame");
+        gameObjectArray1.SetActive(false);
+        */
+
+
+    }
+    public  void pausegame()
+    {
         
-        
+
+
+        _pausegame = true;
+        gameObject.GetComponent<Animator>().enabled = false;
+
+       
+    }
+    public void resumeGame()
+    {
+        _pausegame = false;
+        gameObject.GetComponent<Animator>().enabled = true;
     }
     public void MovePlayerToObject(Vector3 obj, int index,float step)
     {
@@ -72,8 +124,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
-           
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("Clicked on the UI");
+                return;
+
+            }
+
             RaycastHit hit;
             Ray ray = nonVRCamera.ScreenPointToRay(Input.mousePosition);
            
@@ -103,48 +160,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //
-        //if (playparticle)
-        //    gameObject.GetComponentInParent<ParticleSystem>().Play();
-        //else
-        //    gameObject.GetComponentInParent<ParticleSystem>().Stop();
-        //
-       // transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorBlue");
-
-        if (GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
+        if (!_pausegame)
         {
-            transform.GetComponent<Animator>().ResetTrigger("emptypickup");
-            //transform.GetComponent<Animator>().enabled = false;
-        }
-        else
-        {
-            //this mean use idle state
-            transform.GetComponent<Animator>().SetTrigger("emptypickup");
-            transform.GetComponent<Animator>().ResetTrigger("isWalking");
-            
-        } 
-        //
-        
-        float step = speed * Time.deltaTime;
-       //generate position of object after click mouse
-        GenertateObject();
+            float t = Time.time - TimePassed;
+            btn.text = t.ToString();
+            //
+            //if (playparticle)
+            //    gameObject.GetComponentInParent<ParticleSystem>().Play();
+            //else
+            //    gameObject.GetComponentInParent<ParticleSystem>().Stop();
+            //
+            // transform.GetChild(0).GetComponent<Animator>().SetTrigger("ChangeColorBlue");
 
-        if (positionPrefabs.Count > 0)
-        {
-            Vector3 newpos = positionPrefabs[0];
-
-           if (ontriggerE == false)
+            if (GameObject.FindGameObjectsWithTag("Pick Up").Length > 0)
             {
-                MovePlayerToObject(newpos, 0, step);
+                transform.GetComponent<Animator>().ResetTrigger("emptypickup");
+                //transform.GetComponent<Animator>().enabled = false;
             }
             else
             {
-                //coroutine here
-                StartCoroutine(ActionAfterSecond(3.0f, newpos,0,step));
+                //this mean use idle state
+                transform.GetComponent<Animator>().SetTrigger("emptypickup");
+                transform.GetComponent<Animator>().ResetTrigger("isWalking");
 
-              //  MovePlayerToObject(newpos, 0, step);
             }
-            
+            //
+
+            float step = speed * Time.deltaTime;
+            //generate position of object after click mouse
+            GenertateObject();
+
+            if (positionPrefabs.Count > 0)
+            {
+                Vector3 newpos = positionPrefabs[0];
+
+                if (ontriggerE == false)
+                {
+                    MovePlayerToObject(newpos, 0, step);
+                }
+                else
+                {
+                    //coroutine here
+                    StartCoroutine(ActionAfterSecond(3.0f, newpos, 0, step));
+
+                    //  MovePlayerToObject(newpos, 0, step);
+                }
+
+            }
         }
     }
     private int findindex(Vector3 ob)
@@ -217,7 +279,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator ActionAfterSecond(float second, Vector3 obj, int index, float step)
     {
         yield return new WaitForSeconds(second);
-        Debug.Log("Hii :" + Time.time);
+       // Debug.Log("Hii :" + Time.time);
         ChangeAlphaToValue(1.0f,obj,index,step);
     }
     private void ChangeAlphaToValue(float value, Vector3 obj, int index, float step)
@@ -262,6 +324,11 @@ public class PlayerController : MonoBehaviour
                 ontriggerE = true;
                 transform.GetComponent<Animator>().SetInteger("CharacterDie",1);
                 Debug.Log("Meet red cube ");
+
+                greenImage.GetComponent<Image>().fillAmount =((10- count) / 10.0f);
+                
+
+
                 //  Instantiate(particleDie, other.transform.position, Quaternion.identity);
 
                 //Animator animate = transform.GetComponent<Animator>();
@@ -271,8 +338,8 @@ public class PlayerController : MonoBehaviour
                 //  StartCoroutine(ActionAfterSecond(3));
                 //transform.localPosition = Vector3.zero;
                 //Instantiate(particleDie, transform.localPosition, Quaternion.identity);
-               // StartCoroutine(ActionAfterSecond(3));
-               
+                // StartCoroutine(ActionAfterSecond(3));
+
 
 
             }
